@@ -1,0 +1,4 @@
+.env
+node_modules/
+backend/y-webrtc/
+firebase-service-account.json
