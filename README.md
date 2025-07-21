@@ -49,3 +49,48 @@ Delete document
 JWT           
 Toggle favorite status     
 
+## Architecture Documentation
+###  database schema
+<pre>
+documents = users=>{
+access:"edit"(string)
+content:"<p>hello this is tan<em>maie yell are u so deu</em></p>"(string)
+createdAt:July 19, 2025 at 2:01:44 PM UTC+5:30(timestamp)
+favorite:false(boolean)
+owner:"QUsKDc9dD6NmbvvO8njWRlabjOt2"(string)
+title:"hi"
+}
+</pre>
+## Deployment Guide (how to deploy the application)
+git clone https://github.com/Javvaditanmaie/Notion_project.git
+#### how to run backend locally
+#### Installation 
+- npm init -y
+- npm install express etc
+- cd backend
+- node index.js
+- now you see server is running on http://localhost:5000
+##### Frontend
+##### Installation
+###### React+vite
+- npm create vite@latest my-app
+- cd my-app
+- npm install
+- npm run dev
+
+- cd frontend
+- cd my-app
+- npm run dev
+- you will see
+- VITE v7.0.4  ready in 856 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+#### how to run webrtcs
+- run-> git clone https://github.com/yjs/y-webrtc.git
+- cd y-webrtc
+- npm install
+- npm start
+## system design
+<img width="940" height="785" alt="image" src="https://github.com/user-attachments/assets/39c7848a-9d54-425e-afcc-5956577d048b" />
