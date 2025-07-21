@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Editor from "./components/Editor.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
-import DocumentPage from "./pages/DocumentPage.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import DashboardLanding from "./pages/DashboardLanding";
 
@@ -39,14 +38,14 @@ export default function App() {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/documents/:id"
             element={
               <PrivateRoute>
                 <DocumentPage />
               </PrivateRoute>
             }
-          />
+          /> */}
         </Routes>
       </Router>
     </AuthProvider>

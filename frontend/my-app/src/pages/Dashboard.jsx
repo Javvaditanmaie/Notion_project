@@ -93,7 +93,7 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ Toggle Favorite
+  
   const toggleFavorite = async (id) => {
     try {
       const res = await axios.put(
@@ -118,7 +118,7 @@ export default function Dashboard() {
 
   return (
     <div className="fixed inset-0 bg-gray-100 flex">
-      {/* Sidebar */}
+    
       <DashboardSidebar
   title={title}
   setTitle={setTitle}
@@ -129,7 +129,7 @@ export default function Dashboard() {
 />
 
 
-      {/* Main Content */}
+      
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">My Documents</h1>

@@ -13,7 +13,6 @@ export default function DocumentNavbar({ docId }) {
   
   const dropdownRef = useRef();
 
-  // Load initial values
   useEffect(() => {
     const fetchData = async () => {
       const docRef = doc(db, "documents", docId);
@@ -27,7 +26,7 @@ export default function DocumentNavbar({ docId }) {
     fetchData();
   }, [docId]);
 
-  // Close dropdown on outside click
+  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -38,10 +37,10 @@ export default function DocumentNavbar({ docId }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Update access in Firestore
+  
   const handleAccessChange = async (value) => {
-    setAccessLevel(value); // update state in parent
-    await updateDoc(doc(db, "documents", docId), { access: value }); // update Firestore
+    setAccessLevel(value); 
+    await updateDoc(doc(db, "documents", docId), { access: value }); 
   };
 
   const handleCopyLink = () => {
@@ -66,7 +65,7 @@ export default function DocumentNavbar({ docId }) {
       </button>
 
       <div className="flex items-center space-x-4">
-        {/* Share */}
+       
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setShareOpen((prev) => !prev)}

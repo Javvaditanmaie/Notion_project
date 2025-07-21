@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import "../style/login.css"; // ✅ Import the custom styles
+import "../style/login.css"; 
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,12 +27,12 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-    // const user = userCredential.user;
+      const userCredential=await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-    // // ✅ Get Firebase ID token
-    // const firebaseToken = await user.getIdToken();
-    // console.log("Firebase Token:", firebaseToken);
+    // ✅ Get Firebase ID token
+    const firebaseToken = await user.getIdToken();
+    console.log("Firebase Token:", firebaseToken);
       navigate("/dashboard");
     } catch (err) {
       setMessage(getErrorMessage(err.code));

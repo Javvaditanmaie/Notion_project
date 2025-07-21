@@ -2,14 +2,14 @@ import { BubbleMenu } from "@tiptap/react/menus";
 import { useState } from "react";
 import { Mark } from "@tiptap/core";
 import "../App.css"
-// ✅ CommentMark with user info
+
 export const CommentMark = Mark.create({
   name: "comment",
   addAttributes() {
     return {
       text: { default: "" },
       color: { default: "yellow" },
-      user: { default: "" }, // store user info
+      user: { default: "" }, 
     };
   },
   parseHTML() {
@@ -53,7 +53,6 @@ export const CommentMark = Mark.create({
   },
 });
 
-// ✅ BubbleMenuComponent
 export function BubbleMenuComponent({ editor }) {
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState("");
@@ -89,7 +88,7 @@ export function BubbleMenuComponent({ editor }) {
             <em>I</em>
           </button>
           <button onClick={() => setShowCommentInput((prev) => !prev)} type="button">
-            💬
+            💬 comment
           </button>
           <button onClick={handleRemoveComment} type="button">
             ❌ Remove

@@ -7,17 +7,16 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
 const { setupWSConnection } = require("y-websocket/bin/utils");
-const WebSocket = require("ws");
+//const WebSocket = require("ws");
 require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
-const YAML = require("yamljs");
-const swaggerDocument = YAML.load("./openapi.yaml");
+const swaggerDocument = require("./swagger");
+
 
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 
 // Firebase Admin
 const serviceAccount = require("./firebase-service-account.json");
@@ -29,38 +28,38 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Yjs WebSocket Server
-const wss = new WebSocket.Server({ noServer: true });
+// const wss = new WebSocket.Server({ noServer: true });
 
-server.on("upgrade", (req, socket, head) => {
-  if (req.url.startsWith("/yjs")) {
-    wss.handleUpgrade(req, socket, head, (ws) => {
-      setupWSConnection(ws, req);
-    });
-  } else {
-    socket.destroy();
-  }
-});
+// server.on("upgrade", (req, socket, head) => {
+//   if (req.url.startsWith("/yjs")) {
+//     wss.handleUpgrade(req, socket, head, (ws) => {
+//       setupWSConnection(ws, req);
+//     });
+//   } else {
+//     socket.destroy();
+//   }
+// });
 
-// Optional Socket.IO for cursor syncing (not needed for Yjs-only)
-const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] },
-});
-io.on("connection", (socket) => {
-  console.log("🟢 Socket.IO client connected");
+// // Optional Socket.IO for cursor syncing (not needed for Yjs-only)
+// const io = new Server(server, {
+//   cors: { origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] },
+// });
+// io.on("connection", (socket) => {
+//   console.log("🟢 Socket.IO client connected");
 
-  socket.on("join-doc", (docId) => {
-    socket.join(docId);
-    console.log(`📄 Client joined doc ${docId}`);
-  });
+//   socket.on("join-doc", (docId) => {
+//     socket.join(docId);
+//     console.log(`📄 Client joined doc ${docId}`);
+//   });
 
-  socket.on("cursor-update", (data) => {
-    socket.to(data.docId).emit("cursor-update", data);
-  });
+//   socket.on("cursor-update", (data) => {
+//     socket.to(data.docId).emit("cursor-update", data);
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("🔴 Client disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("🔴 Client disconnected");
+//   });
+// });
 
 // Firebase token middleware
 const authenticate = async (req, res, next) => {
@@ -91,13 +90,61 @@ const authenticateJWT = (req, res, next) => {
     res.status(401).send("Invalid token");
   }
 };
-
+/**
+ * @swagger
+ * tags:
+ *   - name: Documents
+ *     description: Document management APIs
+ */
+/**
+ * @swagger
+ * /api/token:
+ *   post:
+ *     summary: Exchange Firebase token for a JWT
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Returns a JWT token.
+ */
 app.post("/api/token", authenticate, (req, res) => {
   const payload = { uid: req.user.uid, email: req.user.email };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10h" });
   res.json({ token });
 });
 
+/**
+ * @swagger
+ * /api/docs:
+ *   get:
+ *     summary: Get all documents owned by the user
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of documents.
+ *   post:
+ *     summary: Create a new document
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Document created.
+ */
 
 // REST endpoints
 app.get("/api/docs", authenticateJWT, async (req, res) => {
@@ -118,6 +165,64 @@ app.post("/api/docs", authenticateJWT, async (req, res) => {
   });
   res.json({ id: docRef.id });
 });
+
+/**
+ * @swagger
+ * /api/docs/{id}:
+ *   get:
+ *     summary: Get a specific document
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Document data.
+ *   put:
+ *     summary: Update a document (title/content)
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Updated successfully.
+ *   delete:
+ *     summary: Delete a document
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Document deleted.
+ */
 
 app.get("/api/docs/:id", authenticateJWT, async (req, res) => {
   const { id } = req.params;
@@ -167,6 +272,24 @@ app.delete("/api/docs/:id", authenticateJWT, async (req, res) => {
   res.sendStatus(200);
 });
 
+/**
+ * @swagger
+ * /api/docs/{id}/favorite:
+ *   put:
+ *     summary: Toggle favorite status of a document
+ *     tags: [Documents]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Favorite status updated.
+ */
 
 app.put("/api/docs/:id/favorite", authenticateJWT, async (req, res) => {
   const { id } = req.params;
@@ -184,6 +307,6 @@ app.put("/api/docs/:id/favorite", authenticateJWT, async (req, res) => {
 // Start server
 server.listen(PORT, () => {
   console.log(`✅ HTTP server running on http://localhost:${PORT}`);
-  console.log(`✅ Yjs WebSocket server running on ws://localhost:${PORT}/yjs`);
+  //console.log(`✅ Yjs WebSocket server running on ws://localhost:${PORT}/yjs`);
   console.log(`✅ Swagger Docs available at http://localhost:${PORT}/api-docs`);
 });

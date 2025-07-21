@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import "../style/signup.css"; // ✅ Import external Tailwind styles
+import "../style/signup.css"; 
 
 export default function Signup() {
   const [email, setEmail] = useState("");

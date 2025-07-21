@@ -21,7 +21,7 @@ import { BubbleMenuComponent, CommentMark } from "./BubbleMenu";
 import "../App.css";
 import PresenceIndicator from "../components/PresenceIndicator";
 
-// Custom FontSize Mark
+
 const FontSize = Mark.create({
   name: "fontSize",
   addAttributes() {

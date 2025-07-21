@@ -7,14 +7,14 @@ export default function DashboardSidebar({ title, setTitle, handleCreate, docs, 
 
   return (
     <div className="w-80 bg-white border-r border-gray-300 p-6 overflow-y-auto h-screen shadow-lg">
-      {/* Welcome */}
+      
       <div className="mb-6">
         <h2 className="text-xl font-bold text-gray-800">
           👋 Welcome, {currentUser?.displayName || currentUser?.email?.split("@")[0]}
         </h2>
       </div>
 
-      {/* Menu */}
+      
       <h3 className="text-lg font-semibold text-gray-700 mb-3">Menu</h3>
       <ul className="space-y-3 mb-6 text-base font-medium text-gray-800">
   <li
@@ -34,7 +34,7 @@ export default function DashboardSidebar({ title, setTitle, handleCreate, docs, 
 </ul>
 
 
-      {/* Created Pages */}
+      
       <div className="mb-6">
         <h3 className="text-sm font-semibold text-gray-500 mb-2">Created Pages</h3>
         <ul className="space-y-1 text-sm text-gray-700">
@@ -54,7 +54,7 @@ export default function DashboardSidebar({ title, setTitle, handleCreate, docs, 
         </ul>
       </div>
 
-      {/* Create New Page */}
+     
       <div>
         <input
           type="text"
