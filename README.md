@@ -72,25 +72,25 @@ git clone https://github.com/Javvaditanmaie/Notion_project.git
 - now you see server is running on http://localhost:5000
 ##### Frontend
 ##### Installation
-React+vite
-npm create vite@latest my-app
-cd my-app
-npm install
-npm run dev
+###### React+vite
+- npm create vite@latest my-app
+- cd my-app
+- npm install
+- npm run dev
 
-cd frontend
-cd my-app
-npm run dev
-you will see
-VITE v7.0.4  ready in 856 ms
+- cd frontend
+- cd my-app
+- npm run dev
+- you will see
+- VITE v7.0.4  ready in 856 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
   ➜  press h + enter to show help
 #### how to run webrtcs
-run-> git clone https://github.com/yjs/y-webrtc.git
-cd y-webrtc
-npm install
-npm start
+- run-> git clone https://github.com/yjs/y-webrtc.git
+- cd y-webrtc
+- npm install
+- npm start
 ## system design
 <img width="940" height="785" alt="image" src="https://github.com/user-attachments/assets/39c7848a-9d54-425e-afcc-5956577d048b" />
