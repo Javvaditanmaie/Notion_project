@@ -62,14 +62,14 @@ title:"hi"
 }
 </pre>
 ## Deployment Guide (how to deploy the application)
-git clone 
+git clone https://github.com/Javvaditanmaie/Notion_project.git
 #### how to run backend locally
 #### Installation 
-npm init -y
-npm install express etc
-cd backend
-node index.js
-now you see server is running on http://localhost:5000
+-npm init -y
+-npm install express etc
+-cd backend
+-node index.js
+-now you see server is running on http://localhost:5000
 ##### Frontend
 ##### Installation
 React+vite
