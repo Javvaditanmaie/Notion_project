@@ -1,0 +1,51 @@
+# Real time Collaborative Notion 
+A real-time Notion-style editor with role-based access, live cursors, comments, and Firebase Auth. Built with React, TipTap, Yjs, WebRTC/WebSocket, and Firestore.
+
+## Tech stack
+- **Frontend**: React, TipTap, TailwindCSS, Socket.io
+- **Collaboration**: Yjs, y-websocket / y-webrtc, yjs awareness
+- **Backend**: Express.js, Firebase Admin SDK, Firestore, JWT
+- **Authentication**: Firebase Auth
+- **Realtime Presence**: Socket.io, y-webrtc awareness
+- **Persistence**: Firestore
+ ---
+ ## **2. API Documentation (Swagger)**
+ Visit `http://localhost:5000/api-docs` after running backend.
+ ### Auth Flow
+
+1. **Login with Firebase Auth**
+2. **Use Firebase ID Token to exchange JWT:**
+   POST `/api/token` → returns JWT
+3. **Use JWT for all protected routes:**
+   Authorization: Bearer <JWT>
+### Endpoints Summary
+#### POST  `/api/token`  
+ Auth Required
+ Firebase ID
+ Description 
+ Exchange Firebase token for JWT 
+ <img width="1919" height="1010" alt="Screenshot 2025-07-21 005856" src="https://github.com/user-attachments/assets/2f271d2e-5c1b-4f1a-a940-7b47073c704b" />
+#### GET    | `/api/docs
+JWT
+Get users-owend document
+<img width="1911" height="977" alt="Screenshot 2025-07-21 010007" src="https://github.com/user-attachments/assets/ffa60252-a6e7-4d6c-9122-b1ed18b63b69" />
+#### POST   | `/api/docs` 
+JWT
+Create a new document   
+<img width="1919" height="1079" alt="Screenshot 2025-07-21 010113" src="https://github.com/user-attachments/assets/6ba8aa58-1361-4e56-8ba1-97c368458931" />
+#### GET    | `/api/docs/:id`
+JWT
+Get document by ID
+<img width="1909" height="1007" alt="Screenshot 2025-07-21 010546" src="https://github.com/user-attachments/assets/1b289152-85ee-4579-8846-c753736e400f" />
+#### PUT    | `/api/docs/:id`          
+JWT         
+Update document    
+<img width="1909" height="1007" alt="Screenshot 2025-07-21 010546" src="https://github.com/user-attachments/assets/fdfd246a-b0cf-4910-9b24-1c86054b9abb" />
+#### | DELETE | `/api/docs/:id`         
+JWT           
+Delete document
+<img width="1879" height="968" alt="Screenshot 2025-07-21 010613" src="https://github.com/user-attachments/assets/84168e5a-a6d9-42a7-9c08-6e69a4537f08" />
+####  PUT    | `/api/docs/:id/favorite` 
+JWT           
+Toggle favorite status     
+
