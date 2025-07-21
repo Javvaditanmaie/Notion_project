@@ -59,7 +59,7 @@ export default function DocumentNavbar({ docId }) {
   return (
     <div className="w-full flex items-center justify-between px-4 py-3 bg-white border-b shadow-sm relative">
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/dashboard")}
         className="btn-backdashboard"
       >
         ← Back to Dashboard

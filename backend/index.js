@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
@@ -8,10 +9,15 @@ const { Server } = require("socket.io");
 const { setupWSConnection } = require("y-websocket/bin/utils");
 const WebSocket = require("ws");
 require("dotenv").config();
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./openapi.yaml");
 
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Firebase Admin
 const serviceAccount = require("./firebase-service-account.json");
@@ -86,12 +92,12 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
-// Exchange Firebase token for JWT
 app.post("/api/token", authenticate, (req, res) => {
   const payload = { uid: req.user.uid, email: req.user.email };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10h" });
   res.json({ token });
 });
+
 
 // REST endpoints
 app.get("/api/docs", authenticateJWT, async (req, res) => {
@@ -161,6 +167,7 @@ app.delete("/api/docs/:id", authenticateJWT, async (req, res) => {
   res.sendStatus(200);
 });
 
+
 app.put("/api/docs/:id/favorite", authenticateJWT, async (req, res) => {
   const { id } = req.params;
   const docRef = db.collection("documents").doc(id);
@@ -178,4 +185,5 @@ app.put("/api/docs/:id/favorite", authenticateJWT, async (req, res) => {
 server.listen(PORT, () => {
   console.log(`✅ HTTP server running on http://localhost:${PORT}`);
   console.log(`✅ Yjs WebSocket server running on ws://localhost:${PORT}/yjs`);
+  console.log(`✅ Swagger Docs available at http://localhost:${PORT}/api-docs`);
 });

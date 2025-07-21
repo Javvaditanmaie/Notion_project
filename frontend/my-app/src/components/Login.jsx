@@ -28,7 +28,12 @@ export default function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+    // const user = userCredential.user;
+
+    // // ✅ Get Firebase ID token
+    // const firebaseToken = await user.getIdToken();
+    // console.log("Firebase Token:", firebaseToken);
+      navigate("/dashboard");
     } catch (err) {
       setMessage(getErrorMessage(err.code));
     }

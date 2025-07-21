@@ -226,7 +226,7 @@ if (editor && currentUser) {
   <div className="text-center mt-6">
     <button
       className="btn-back"
-      onClick={() => navigate("/")}
+      onClick={() => navigate("/dashboard")}
     >
       Back to Dashboard
     </button>

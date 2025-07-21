@@ -8,6 +8,7 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import DocumentPage from "./pages/DocumentPage.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import DashboardLanding from "./pages/DashboardLanding";
 
 import "./App.css";
 
@@ -16,13 +17,14 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<DashboardLanding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/editor/:id" element={<Editor />} />
 
           {/* Private Routes */}
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />
