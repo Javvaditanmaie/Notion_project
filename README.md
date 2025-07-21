@@ -64,10 +64,20 @@ title:"hi"
 ## Deployment Guide (how to deploy the application)
 git clone 
 #### how to run backend locally
+#### Installation 
+npm init -y
+npm install express etc
 cd backend
 node index.js
 now you see server is running on http://localhost:5000
 ##### Frontend
+##### Installation
+React+vite
+npm create vite@latest my-app
+cd my-app
+npm install
+npm run dev
+
 cd frontend
 cd my-app
 npm run dev
